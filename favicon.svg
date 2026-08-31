@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="tvGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="50" cy="50" rx="44" ry="15" transform="rotate(-20 50 50)" stroke="url(#tvGrad)" stroke-width="3" opacity="0.5"/>
+  <circle cx="91" cy="35" r="3.2" fill="url(#tvGrad)"/>
+  <path d="M28,20 L50,66 L72,20" stroke="url(#tvGrad)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
