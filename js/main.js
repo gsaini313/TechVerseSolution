@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initNavToggle();
   setFooterYear();
   initScrollReveal();
+  initCardTilt();
 });
 
 /* Fade/slide in key content blocks as they enter the viewport.
@@ -16,7 +17,7 @@ function initScrollReveal() {
   var soloSelectors = [
     ".hero-copy", ".hero-visual", ".section-head", ".intro p",
     ".service-row", ".why-block .panel", ".story-block",
-    ".pricing-table-wrap", ".cta-banner"
+    ".pricing-table-wrap", ".cta-banner", ".biz-card"
   ];
 
   var allTargets = [];
@@ -84,6 +85,31 @@ function initNavToggle() {
       nav.classList.remove("is-open");
       toggle.setAttribute("aria-expanded", "false");
     }
+  });
+}
+
+/* Subtle pointer-driven tilt on the /card business card (fine pointers only) */
+function initCardTilt() {
+  var card = document.querySelector(".biz-card");
+  var wrap = document.querySelector(".biz-card-wrap");
+  if (!card || !wrap) return;
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  wrap.style.perspective = "900px";
+
+  wrap.addEventListener("mousemove", function (e) {
+    var rect = card.getBoundingClientRect();
+    var x = (e.clientX - rect.left) / rect.width - 0.5;
+    var y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transition = "transform 0.06s linear";
+    card.style.transform =
+      "rotateY(" + (x * 8).toFixed(2) + "deg) rotateX(" + (-y * 8).toFixed(2) + "deg) scale(1.015)";
+  });
+
+  wrap.addEventListener("mouseleave", function () {
+    card.style.transition = "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
+    card.style.transform = "rotateY(0deg) rotateX(0deg) scale(1)";
   });
 }
 

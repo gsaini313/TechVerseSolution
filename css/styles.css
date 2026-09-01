@@ -1502,3 +1502,359 @@ table.pricing-table td.price {
   .chip-1 { top: -38px; right: -6px; }
   .chip-3 { right: 4px; }
 }
+
+/* ============================================
+   Digital Business Card (/card)
+   ============================================ */
+.card-shell {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 44px 20px 52px;
+  background:
+    radial-gradient(circle, rgba(79, 70, 229, 0.12) 1px, transparent 1px) 0 0 / 26px 26px,
+    var(--color-bg);
+}
+
+.card-shell::before,
+.card-shell::after {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.card-shell::before {
+  background: var(--color-primary-2);
+  top: -160px;
+  left: -160px;
+}
+
+.card-shell::after {
+  background: var(--color-accent-2);
+  bottom: -160px;
+  right: -140px;
+}
+
+.card-shell-brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--color-primary-dark);
+}
+
+.card-shell-brand span {
+  color: var(--color-accent-dark);
+}
+
+.card-shell-brand .logo-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 3px 8px rgba(79, 70, 229, 0.3));
+}
+
+.card-shell-more {
+  position: relative;
+  z-index: 1;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  transition: color 0.15s ease;
+}
+
+.card-shell-more:hover {
+  color: var(--color-primary);
+}
+
+/* ---- Card wrap: hosts the stack shadow + floating chips ---- */
+.biz-card-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+}
+
+.biz-card-stack {
+  position: absolute;
+  inset: 16px -12px -18px 16px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.4), rgba(124, 58, 237, 0.4));
+  transform: rotate(3deg);
+  z-index: 0;
+}
+
+/* ---- The card itself ---- */
+.biz-card {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  will-change: transform;
+}
+
+/* ---- Hero panel: dark gradient photo seam ---- */
+.biz-card-hero {
+  position: relative;
+  height: 172px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.16) 1px, transparent 1px) 0 0 / 16px 16px,
+    var(--gradient-hero);
+}
+
+.biz-card-hero::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  filter: blur(50px);
+  top: -90px;
+  right: -60px;
+  pointer-events: none;
+}
+
+.biz-card-noise {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  filter: url(#grainFilter);
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* ---- Avatar straddling the hero/body seam ---- */
+.biz-card-avatar {
+  position: relative;
+  z-index: 2;
+  width: 128px;
+  height: 128px;
+  margin: -64px auto 0;
+  border-radius: 50%;
+  background: var(--gradient-accent);
+  padding: 4px;
+  box-shadow: 0 16px 32px rgba(30, 27, 75, 0.35);
+}
+
+.biz-card-avatar-ring {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 4px;
+}
+
+.biz-card-avatar-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.biz-card-avatar-fallback {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.9rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.biz-card-avatar-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 18%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.biz-card-avatar-photo.is-loaded {
+  opacity: 1;
+}
+
+/* ---- Body content ---- */
+.biz-card-body {
+  padding: 14px 28px 30px;
+  text-align: center;
+}
+
+.biz-card-body h1 {
+  font-size: 1.45rem;
+  margin: 2px 0 0.2em;
+}
+
+.biz-card-role {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+}
+
+.biz-card-tagline {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  max-width: 270px;
+  margin: 0 auto 20px;
+}
+
+.biz-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.biz-card-tag {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+
+.biz-card-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin-bottom: 16px;
+}
+
+.biz-card-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 22px;
+  text-align: left;
+}
+
+.biz-card-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.biz-card-contact-row:hover {
+  background: var(--color-bg-alt);
+  transform: translateX(2px);
+}
+
+.biz-card-contact-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.biz-card-contact-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.biz-card-contact-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.biz-card-contact-text .label {
+  font-size: 0.66rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.biz-card-contact-text .value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.biz-card-contact-row .chevron {
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.biz-card-contact-row:hover .chevron {
+  transform: translateX(3px);
+  color: var(--color-primary);
+}
+
+.biz-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.83rem;
+  color: var(--color-text-muted);
+}
+
+.biz-card-footer .logo-icon-sm {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 400px) {
+  .biz-card-body {
+    padding: 14px 20px 26px;
+  }
+
+  .biz-card-tags {
+    gap: 6px;
+  }
+}
