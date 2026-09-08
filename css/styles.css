@@ -20,6 +20,7 @@
   --color-accent-dark: var(--color-primary);
 
   --color-border: #e5e7f5;
+  --color-header-bg: rgba(247, 248, 252, 0.86);
 
   --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-primary-2));
   --gradient-accent: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
@@ -42,6 +43,55 @@
   --shadow-glow-primary: 0 14px 34px rgba(79, 70, 229, 0.3);
   --shadow-glow-accent: 0 14px 34px rgba(79, 70, 229, 0.3);
   --header-height: 76px;
+}
+
+/* ---------- Dark theme ----------
+   Light values live on bare :root above. A visitor with no saved
+   preference gets the OS-level dark preference here as a no-JS fallback;
+   js/main.js normally sets data-theme itself (from a saved choice, or the
+   visitor's local time of day) before first paint, which is why the
+   data-theme rule below has to be able to win over prefers-color-scheme
+   in both directions. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #0b0e1c;
+    --color-bg-alt: #12162a;
+    --color-surface: #161b32;
+    --color-text: #eef0fa;
+    --color-text-muted: #9aa0c2;
+    --color-primary: #6d76f5;
+    --color-primary-2: #9067f0;
+    --color-primary-light: rgba(109, 118, 245, 0.18);
+    --color-border: #262c4a;
+    --color-header-bg: rgba(11, 14, 28, 0.82);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.55);
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #0b0e1c;
+  --color-bg-alt: #12162a;
+  --color-surface: #161b32;
+  --color-text: #eef0fa;
+  --color-text-muted: #9aa0c2;
+  --color-primary: #6d76f5;
+  --color-primary-2: #9067f0;
+  --color-primary-light: rgba(109, 118, 245, 0.18);
+  --color-border: #262c4a;
+  --color-header-bg: rgba(11, 14, 28, 0.82);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.55);
+}
+
+html {
+  transition: background-color 0.25s ease;
+}
+
+body {
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 /* ---------- Reset ---------- */
@@ -87,7 +137,7 @@ h1, h2, h3, h4 {
   line-height: 1.2;
   letter-spacing: -0.01em;
   margin: 0 0 0.6em;
-  color: #0e1122;
+  color: var(--color-text);
 }
 
 p {
@@ -269,7 +319,7 @@ section {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(247, 248, 252, 0.86);
+  background: var(--color-header-bg);
   backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid var(--color-border);
   height: var(--header-height);
@@ -291,7 +341,7 @@ section {
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1.2rem;
-  color: var(--color-primary-dark);
+  color: var(--color-text);
   letter-spacing: -0.01em;
 }
 
@@ -362,6 +412,45 @@ section {
   font-size: 0.9rem;
 }
 
+/* ---------- Theme toggle ---------- */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.theme-toggle svg {
+  width: 19px;
+  height: 19px;
+}
+
+.theme-toggle .icon-moon {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle .icon-sun {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle .icon-moon {
+  display: inline-flex;
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -379,7 +468,7 @@ section {
   display: block;
   height: 2px;
   width: 100%;
-  background: var(--color-primary-dark);
+  background: var(--color-text);
   border-radius: 2px;
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
@@ -493,7 +582,7 @@ section {
 
 .browser-url {
   margin-left: 8px;
-  background: #ffffff;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 999px;
   padding: 4px 14px;
@@ -1441,6 +1530,10 @@ table.pricing-table td.price {
     align-self: flex-start;
   }
 
+  .theme-toggle {
+    align-self: flex-start;
+  }
+
   .service-row {
     grid-template-columns: 1fr;
   }
@@ -1546,16 +1639,25 @@ table.pricing-table td.price {
   right: -140px;
 }
 
-.card-shell-brand {
+.card-shell-top {
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.card-shell-brand {
   display: flex;
   align-items: center;
   gap: 8px;
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1.05rem;
-  color: var(--color-primary-dark);
+  color: var(--color-text);
 }
 
 .card-shell-brand span {

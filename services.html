@@ -3,6 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <script>document.documentElement.classList.add('js');</script>
+<script>
+(function () {
+  var theme = null;
+  try { theme = localStorage.getItem('tv-theme'); } catch (e) {}
+  if (theme !== 'light' && theme !== 'dark') {
+    var hour = new Date().getHours();
+    theme = (hour >= 7 && hour < 19) ? 'light' : 'dark';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Services | TechVerse Solution</title>
 <meta name="description" content="Website design, web applications, hosting & maintenance, integrations & automation, platform modernization, and legacy app-to-cloud migration for small and medium businesses." />
@@ -30,6 +41,10 @@
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"/></svg>
+      </button>
       <a href="contact.html" class="btn btn-primary nav-cta">Get a Free Quote</a>
     </nav>
   </div>

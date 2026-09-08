@@ -2,6 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   initNavToggle();
+  initThemeToggle();
   setFooterYear();
   initScrollReveal();
   initCardTilt();
@@ -85,6 +86,37 @@ function initNavToggle() {
       nav.classList.remove("is-open");
       toggle.setAttribute("aria-expanded", "false");
     }
+  });
+}
+
+/* Light/dark theme toggle. An inline script in <head> already picks the
+   starting theme (saved choice, or the visitor's local time of day) before
+   the page paints, so no flash of the wrong theme at night — this just
+   wires up the button and remembers an explicit choice going forward. */
+var THEME_STORAGE_KEY = "tv-theme";
+
+function initThemeToggle() {
+  var toggles = document.querySelectorAll(".theme-toggle");
+  if (!toggles.length) return;
+
+  updateThemeToggleLabels();
+
+  toggles.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem(THEME_STORAGE_KEY, next); } catch (e) {}
+      updateThemeToggleLabels();
+    });
+  });
+}
+
+function updateThemeToggleLabels() {
+  var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  var label = isDark ? "Switch to light mode" : "Switch to dark mode";
+  document.querySelectorAll(".theme-toggle").forEach(function (btn) {
+    btn.setAttribute("aria-label", label);
+    btn.setAttribute("title", label);
   });
 }
 

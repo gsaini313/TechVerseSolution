@@ -3,6 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <script>document.documentElement.classList.add('js');</script>
+<script>
+(function () {
+  var theme = null;
+  try { theme = localStorage.getItem('tv-theme'); } catch (e) {}
+  if (theme !== 'light' && theme !== 'dark') {
+    var hour = new Date().getHours();
+    theme = (hour >= 7 && hour < 19) ? 'light' : 'dark';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Gaurav Saini | TechVerse Solution</title>
 <meta name="description" content="Gaurav Saini — Founder of TechVerse Solution. Get in touch by email, phone, or explore our web design & development services." />
@@ -33,10 +44,16 @@
 
 <main class="card-shell">
 
-  <a href="index.html" class="card-shell-brand">
-    <svg class="logo-icon" viewBox="0 0 100 100" fill="none" aria-hidden="true"><ellipse cx="50" cy="50" rx="44" ry="15" transform="rotate(-20 50 50)" stroke="url(#tvGrad)" stroke-width="3" opacity="0.5"/><circle cx="91" cy="35" r="3.2" fill="url(#tvGrad)"/><path d="M28,20 L50,66 L72,20" stroke="url(#tvGrad)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    TechVerse <span>Solution</span>
-  </a>
+  <div class="card-shell-top">
+    <a href="index.html" class="card-shell-brand">
+      <svg class="logo-icon" viewBox="0 0 100 100" fill="none" aria-hidden="true"><ellipse cx="50" cy="50" rx="44" ry="15" transform="rotate(-20 50 50)" stroke="url(#tvGrad)" stroke-width="3" opacity="0.5"/><circle cx="91" cy="35" r="3.2" fill="url(#tvGrad)"/><path d="M28,20 L50,66 L72,20" stroke="url(#tvGrad)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      TechVerse <span>Solution</span>
+    </a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"/></svg>
+    </button>
+  </div>
 
   <div class="biz-card-wrap">
     <div class="biz-card-stack" aria-hidden="true"></div>
