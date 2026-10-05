@@ -1960,3 +1960,8 @@ table.pricing-table td.price {
     gap: 6px;
   }
 }
+
+/* Brand logo image (replaces the old inline SVG mark) */
+img.logo-icon {
+  width: auto;
+}
