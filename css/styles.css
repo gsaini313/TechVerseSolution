@@ -1965,3 +1965,7 @@ table.pricing-table td.price {
 img.logo-icon {
   width: auto;
 }
+
+img.logo-icon-sm {
+  width: auto;
+}
